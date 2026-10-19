@@ -13,4 +13,8 @@ export interface ApiDefinition {
     destroy: typeof routes['session.destroy']
   }
   dashboard: typeof routes['dashboard']
+  flights: {
+    create: typeof routes['flights.create']
+    store: typeof routes['flights.store']
+  }
 }

@@ -27,5 +27,6 @@ router
   .group(() => {
     router.on('/dashboard').renderInertia('dashboard', {}).as('dashboard')
     router.post('logout', [controllers.Session, 'destroy'])
+    router.resource('flights', controllers.Flights).only(['create', 'store'])
   })
   .use(middleware.auth())
