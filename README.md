@@ -1,356 +1,168 @@
-<div align="center">
+# ✈️ Waypoint
 
-  <!-- Add your cover image here -->
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/adonisjs/starter-kits/blob/main/docs/react-dark.png?raw=true">
-    <img src="https://github.com/adonisjs/starter-kits/blob/main/docs/react-light.png?raw=true" alt="AdonisJS React Inertia Starter Kit" width="100%">
-  </picture>
+**Log your sim flights, map your routes, track your hours.**
 
-  <h1>React Inertia Starter Kit</h1>
+Waypoint est un carnet de vol (*logbook*) pour pilotes de simulation : on y enregistre ses vols, on les retrouve sur une carte et on suit ses statistiques. En bref, un Strava pour les vols en simulateur.
 
-  <p>
-    <strong>A batteries-included AdonisJS starter kit for building modern single-page applications with React.</strong>
-  </p>
+> Projet réalisé dans le cadre de l'atelier AdonisJS en BUT 3 MMI, Université Gustave Eiffel.
 
-  <p>
-    Built for developers who want the power of React with the simplicity of server-side routing and rendering.
-  </p>
+## Sommaire
 
-  <br>
-
-<a href="#-whats-in-the-box">Features</a>
-<span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
-<a href="#-quick-start">Quick Start</a>
-<span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
-<a href="https://adonisjs.com">Documentation</a>
-
-  <br>
-  <br>
-
-</div>
+1. [Pourquoi ce projet ?](#pourquoi-ce-projet-)
+   - [La simulation de vol, ce n'est pas « bouton décoller, bouton atterrir »](#la-simulation-de-vol-ce-nest-pas--bouton-décoller-bouton-atterrir-)
+   - [VATSIM : un ciel partagé, avec de vrais contrôleurs](#vatsim--un-ciel-partagé-avec-de-vrais-contrôleurs)
+   - [Les avions « moddés »](#les-avions--moddés---des-répliques-de-systèmes-pas-des-modèles-3d)
+2. [Fonctionnalités](#fonctionnalités)
+3. [Technologies](#technologies)
+4. [Les notions AdonisJS utilisées](#les-notions-adonisjs-utilisées)
+5. [Installation](#installation)
+6. [Retour sur l'utilisation de l'IA](#retour-sur-lutilisation-de-lia)
+7. [Glossaire](#glossaire)
 
 ---
 
-## ✨ What's in the Box
+## Pourquoi ce projet ?
 
-This starter kit is designed to help you build production-ready single-page applications with React and Inertia.js. It combines the modern DX of React with the simplicity of traditional server-side routing, giving you the best of both worlds.
+### La simulation de vol, ce n'est pas « bouton décoller, bouton atterrir »
 
-### 🎯 Core Features
+Quand on parle de simulateur de vol, on imagine souvent un jeu : on choisit un avion, on appuie sur une touche, on décolle. La simulation que je pratique est l'inverse. Elle cherche à **reproduire le métier de pilote de ligne** le plus fidèlement possible. Un vol se prépare comme dans la réalité :
 
-- **🔐 Authentication System** - Complete user signup, login, and session management out of the box
-- **⚛️ React 19** - Latest React with modern hooks and concurrent features
-- **🔄 Inertia.js** - Build SPAs without the API complexity—server-side routing that feels like client-side
-- **🎨 Custom Design System** - Hand-written CSS built on semantic design tokens, re-themed from one place in `app.css`
-- **🌗 Dark Mode** - Light and dark themes with a header toggle, remembered in a cookie and server-rendered with no flash
-- **🧩 Layouts** - Marketing, auth, app and settings layouts, attached per page and nestable
-- **📊 Dashboard** - An authenticated `/dashboard` route to land on after login or signup
-- **✅ Typed Forms** - The `Form` component types its `errors` from the route's VineJS validator
-- **🔔 Toast Notifications** - Built-in toast system using Sonner
-- **🛡️ Security First** - CSRF protection, Shield middleware, and secure session handling
-- **🔒 Type Safety** - End-to-end TypeScript with Tuyau for type-safe routing
+- le plan de vol (route, niveaux, carburant) ;
+- la météo réelle ;
+- les calculs de performance au décollage ;
+- les check-lists ;
+- puis le démarrage de l'avion, interrupteur par interrupteur, à partir d'un cockpit entièrement éteint (*cold & dark*).
 
-### 🔧 Tech Stack
+Un vol Paris → Nice dure environ 1h30, comme en vrai, et on ne peut pas le mettre en accéléré.
 
-<table>
-  <tr>
-    <td><strong>Backend</strong></td>
-    <td>
-      <a href="https://adonisjs.com">AdonisJS 7.x</a> - Full-featured Node.js framework
-    </td>
-  </tr>
-  <tr>
-    <td><strong>Frontend</strong></td>
-    <td>
-      <a href="https://react.dev">React 19</a> - Modern UI library with hooks and concurrent rendering
-    </td>
-  </tr>
-  <tr>
-    <td><strong>Adapter</strong></td>
-    <td>
-      <a href="https://inertiajs.com">Inertia.js</a> - Build SPAs with server-side routing (no API needed)
-    </td>
-  </tr>
-  <tr>
-    <td><strong>Database</strong></td>
-    <td>
-      <a href="https://lucid.adonisjs.com">Lucid ORM</a> - SQL ORM with migrations (SQLite, PostgreSQL, MySQL, MSSQL)
-    </td>
-  </tr>
-  <tr>
-    <td><strong>Auth</strong></td>
-    <td>
-      Session-based authentication with secure cookie storage
-    </td>
-  </tr>
-  <tr>
-    <td><strong>Styling</strong></td>
-    <td>
-      Hand-written CSS built on semantic design tokens, with light and dark themes
-    </td>
-  </tr>
-  <tr>
-    <td><strong>Build</strong></td>
-    <td>
-      <a href="https://vitejs.dev">Vite</a> - Lightning-fast HMR and optimized builds
-    </td>
-  </tr>
-  <tr>
-    <td><strong>Validation</strong></td>
-    <td>
-      <a href="https://vinejs.dev">VineJS</a> - Type-safe schema validation
-    </td>
-  </tr>
-  <tr>
-    <td><strong>Type Safety</strong></td>
-    <td>
-      <a href="https://docs.adonisjs.com/guides/frontend/api-client">Tuyau</a> - End-to-end type safety for routes and API calls
-    </td>
-  </tr>
-  <tr>
-    <td><strong>UI Components</strong></td>
-    <td>
-      <a href="https://sonner.emilkowal.ski">Sonner</a> - Toast notifications for React
-    </td>
-  </tr>
-  <tr>
-    <td><strong>Icons</strong></td>
-    <td>
-      <a href="https://lucide.dev/guide/packages/lucide-react">Lucide (lucide-react)</a> - Consistent, tree-shakeable icon set
-    </td>
-  </tr>
-  <tr>
-    <td><strong>Testing</strong></td>
-    <td>
-      <a href="https://japa.dev">Japa</a> - Delightful testing framework with browser testing support
-    </td>
-  </tr>
-  <tr>
-    <td><strong>TypeScript</strong></td>
-    <td>
-      Full TypeScript support with strict mode enabled
-    </td>
-  </tr>
-</table>
+### VATSIM : un ciel partagé, avec de vrais contrôleurs
+
+**VATSIM** (*Virtual Air Traffic Simulation Network*) est un réseau mondial et gratuit. Des milliers de pilotes y connectent leur simulateur dans un même espace aérien virtuel. Surtout, ce ciel est **géré par des contrôleurs aériens humains**, qui parlent à la radio avec les pilotes en utilisant la phraséologie aéronautique réelle.
+
+Ce n'est pas ouvert à n'importe qui, n'importe comment :
+
+- **Pour voler en tant que pilote**, tout nouveau membre doit d'abord suivre un module d'orientation et réussir un examen d'entrée (le rating **P0**). Ce n'est qu'après qu'on peut se connecter. Ensuite, des qualifications pilote optionnelles calquées sur la réalité (P1 « PPL », P2 « IR », etc.) se passent avec des organismes de formation agréés. Elles combinent théorie, cours avec instructeur et test pratique en vol.
+- **Pour devenir contrôleur**, c'est encore plus exigeant. Il faut d'abord passer un examen théorique, puis suivre plusieurs sessions de formation pratique avec un mentor sur un serveur d'entraînement, puis réussir un examen pratique devant un examinateur. Chaque grade se débloque de cette façon :
+  - **S1** : sol ;
+  - **S2** : tour ;
+  - **S3** : approche ;
+  - **C1** : contrôle en route.
+
+  Dans certaines régions, l'**attente avant de commencer la formation pratique** se compte en mois.
+
+Résultat : quand on vole sur VATSIM, il faut connaître ses procédures. Le contrôleur en face s'attend à ce que l'on suive sa clearance, son départ et ses instructions comme un vrai équipage.
+
+### Les avions « moddés » : des répliques de systèmes, pas des modèles 3D
+
+Les avions fournis de base avec les simulateurs grand public (Microsoft Flight Simulator, X-Plane) sont volontairement simplifiés. La communauté utilise des **add-ons** (des avions « moddés ») développés par des studios spécialisés. Les plus poussés sont dits *study level* : leur objectif est de **simuler chaque système de l'avion réel**, à savoir :
+
+- l'électricité ;
+- l'hydraulique ;
+- le carburant ;
+- le pneumatique ;
+- l'avionique ;
+- les pannes.
+
+Ils sont souvent conçus à partir de la documentation constructeur et avec l'aide de pilotes de ligne.
+
+L'exemple de référence est le **Fenix A320**, une reproduction de l'Airbus A320. Quelques anecdotes montrent à quel point tout est simulé :
+
+- **La clim des passagers « vole » de la poussée aux moteurs.** Sur un A320, la climatisation (les *packs*) fonctionne avec de l'air chaud prélevé directement dans les moteurs. Prélever cet air réduit la poussée disponible. C'est pourquoi beaucoup de compagnies coupent la clim pendant le décollage quand les performances sont justes. Dans le Fenix, le calculateur de performances de la tablette de bord demande si les packs seront allumés ou éteints, car le résultat change.
+- **Les centrales inertielles prennent leur temps.** Au démarrage, les centrales de navigation (ADIRS) doivent s'aligner avant que l'avion sache où il est. Comme sur le vrai avion, cela prend environ 7 à 10 minutes, et le temps dépend de la latitude : c'est plus rapide près de l'équateur, plus lent près des pôles. C'est donc la toute première chose qu'on lance en arrivant dans le cockpit.
+
+**WASM ou programme externe : où tourne le « cerveau » de l'avion ?**
+
+Pour coder la logique de leurs systèmes, la plupart des add-ons de Microsoft Flight Simulator utilisent des modules WASM (WebAssembly). Ce sont des programmes compilés qui s'exécutent à l'intérieur du simulateur, dans un environnement isolé (sandbox) qu'il contrôle. C'est la même technologie qui permet de faire tourner du code compilé dans un navigateur web.
+
+Le Fenix fait un choix différent. Ses systèmes tournent dans une application séparée, lancée sur le PC à côté du simulateur. Elle calcule toute la logique de l'avion et échange en continu avec le simulateur. Cette approche ne dépend pas des limites de la sandbox, et elle soulage le processus principal du simulateur. En contrepartie, l'avion est réservé au PC : il ne peut pas tourner sur Xbox, qui n'autorise pas de programme externe.
+
+### Et donc, pourquoi un logbook ?
+
+Les vrais pilotes tiennent un **carnet de vol** où ils consignent chaque vol : date, appareil, départ, arrivée, durée. Avec ce niveau d'implication, beaucoup de pilotes virtuels veulent la même chose : garder une trace de leurs vols, voir leurs routes sur une carte et suivre leurs heures. Waypoint répond à ce besoin.
 
 ---
 
-## 🚀 Quick Start
+## Fonctionnalités
 
-### Create a New Project
+- **Gestion des vols (CRUD)** : créer, consulter, modifier et supprimer un vol (départ, arrivée, appareil, date, durée, notes).
+- **Validation des données** : les codes OACI doivent correspondre à un vrai aéroport, l'arrivée doit être différente du départ, la durée et la date doivent être cohérentes.
+- **Base d'aéroports** : plusieurs milliers d'aéroports réels importés depuis le jeu de données ouvert OurAirports.
+- **Calcul de distance (Hors MVP)** : la distance de chaque vol est calculée à partir des coordonnées des aéroports (formule de haversine).
+- **Carte des trajets (Hors MVP)** : tous les vols tracés sur une carte interactive.
+- **Statistiques** : nombre de vols, heures totales, distance totale, aéroports visités, appareil le plus utilisé.
+- *(Bonus)* **Import SimBrief (Hors MVP)** : pré-remplir un vol à partir de son dernier plan de vol SimBrief.
+
+---
+
+## Technologies
+
+| Rôle | Outil |
+|---|---|
+| Framework backend | [AdonisJS](https://docs.adonisjs.com/) (starter kit React) |
+| Base de données | SQLite |
+| ORM | [Lucid](https://lucid.adonisjs.com/docs/introduction) |
+| Validation | [VineJS](https://vinejs.dev/docs/introduction) |
+| Frontend | React, via Inertia.js |
+| Carte | Leaflet / React Leaflet + tuiles OpenStreetMap |
+| Données aéroports | [OurAirports](https://ourairports.com/data/) (domaine public) |
+
+---
+
+## Les notions AdonisJS utilisées
+
+### Architecture MVC
+- **Modèles** (`app/models`) : `Airport` et `Flight`, qui décrivent les données et leurs relations.
+- **Contrôleurs** (`app/controllers`) : `FlightsController` gère le CRUD et `DashboardController` calcule les statistiques.
+- **Vues** : des pages React (Inertia) qui reçoivent directement les données envoyées par les contrôleurs, sans API séparée.
+
+### Routes
+Les routes sont déclarées dans `start/routes.ts`. Le CRUD des vols utilise une **route ressource**. Une seule ligne génère les sept routes standard (`index`, `create`, `store`, `show`, `edit`, `update`, `destroy`), chacune reliée à la méthode correspondante du contrôleur.
+
+### Lucid ORM
+- **Migrations** : elles décrivent la structure des tables (`airports`, `flights`) et la versionnent comme du code.
+- **Relations** : un vol appartient à un aéroport de départ et à un aéroport d'arrivée (`belongsTo`). Grâce au *preload*, on récupère les aéroports avec le vol en une seule requête.
+- **Seeder** : il importe le fichier CSV des aéroports dans la base au lancement du projet.
+
+### VineJS
+Chaque formulaire passe par un **validator** avant d'arriver en base. Point notable : la règle `exists` (ajoutée à VineJS par Lucid) vérifie directement **en base de données** que le code OACI saisi correspond à un aéroport existant.
+
+---
+
+## Installation
+
+**Prérequis :** Node.js en version LTS (22 ou 24 recommandé) et npm 11, ou pnpm.
 
 ```bash
-npm init adonisjs@latest -- -K=react
+git clone https://github.com/<user>/waypoint.git
+cd waypoint
+npm install
+cp .env.example .env
+node ace generate:key
+node ace migration:run
+node ace db:seed
+npm run dev
 ```
 
-During setup, you'll be asked to choose:
-
-- **Database**: Choose your preferred database (SQLite, PostgreSQL, MySQL, MSSQL)
-- **Auth guard**: Select `session` for cookie-based authentication
-- **SSR**: Choose whether to enable server-side rendering (optional)
-
-This command will:
-
-- Clone this starter kit
-- Install all dependencies
-- Set up your `.env` file
-- Generate your app encryption key
-- Configure your database
-- Configure Inertia with React
-- Run migrations
-
-### Start Developing
-
-```bash
-# Run the development server with hot reload
-node ace serve --hmr
-
-# Run tests
-node ace test
-
-# Type check both backend and frontend
-npm run typecheck
-
-# Lint your code
-npm run lint
-
-# Build for production
-npm run build
-
-# Start production server
-npm start
-```
-
-Your app will be running at `http://localhost:3333`
+L'application est ensuite accessible sur l'adresse affichée dans le terminal (par défaut `http://localhost:3333`).
 
 ---
 
-## 🧱 Adding Pages
+## Retour sur l'utilisation de l'IA
 
-The kit ships the building blocks for app pages, without shipping pages you would have to delete.
-
-| Piece                            | What it does                                                                                   |
-| -------------------------------- | ---------------------------------------------------------------------------------------------- |
-| `inertia/components/page.tsx`    | Sets the document title and renders the page heading, description and actions.                 |
-| `inertia/components/section.tsx` | A group of content within a page, with an optional title. Stacked sections get a divider.      |
-| `inertia/layouts/settings.tsx`   | The settings area: a heading, a sidebar of links and a card holding the current settings page. |
-| `nav` in `layouts/app.tsx`       | The top-level navigation. Add an entry for every new area of your app.                         |
-
-### A single page
-
-Wrap the page in `Page` and use the app layout. Pass `hideTitle` when the page should set the document title without rendering a heading.
-
-```tsx
-// inertia/pages/reports.tsx
-import Page from '~/components/page'
-import AppLayout from '~/layouts/app'
-
-export default function Reports() {
-  return (
-    <Page title="Reports" description="Monthly numbers at a glance.">
-      …
-    </Page>
-  )
-}
-
-Reports.layout = [AppLayout]
-```
-
-Register a route for it and add an entry to `nav` in `inertia/layouts/app.tsx` to link to it.
-
-To show content on a card, wrap it in `<div className="panel">`. The settings layout uses the same class for its content card.
-
-### Settings pages
-
-The settings layout is ready, it only needs pages. Start with a route group.
-
-```ts
-// start/routes.ts
-router
-  .group(() => {
-    router.on('/').renderInertia('settings/profile', {}).as('profile')
-    router.on('/security').renderInertia('settings/security', {}).as('security')
-  })
-  .prefix('/settings')
-  .as('settings')
-  .use(middleware.auth())
-```
-
-List the pages in `items` inside `inertia/layouts/settings.tsx`. The sidebar highlights the current one.
-
-```tsx
-const items: NavItem[] = [
-  { label: 'Profile', route: 'settings.profile', icon: User },
-  { label: 'Security', route: 'settings.security', icon: Shield },
-]
-```
-
-Each page nests the settings layout inside the app layout, so the sidebar persists as you move between pages.
-
-```tsx
-// inertia/pages/settings/profile.tsx
-import { Head } from '@inertiajs/react'
-import Section from '~/components/section'
-import AppLayout from '~/layouts/app'
-import SettingsLayout from '~/layouts/settings'
-
-export default function Profile() {
-  return (
-    <>
-      <Head title="Profile" />
-      <Section title="Profile" description="This is how others will see you.">
-        <div className="field">
-          <label className="field__label" htmlFor="username">
-            Username
-          </label>
-          <input className="field__input" id="username" name="username" />
-          <p className="field__hint">This is your public display name.</p>
-        </div>
-      </Section>
-    </>
-  )
-}
-
-Profile.layout = [AppLayout, SettingsLayout]
-```
-
-Finally, add `{ label: 'Settings', route: 'settings.profile', icon: Settings }` to `nav` in the app layout. It stays active on every page under `/settings`.
-
-Need another area with a sidebar, like reports or admin? Copy `layouts/settings.tsx`, change its heading and items. The `sidebar-layout` styles are shared.
+**Outils utilisés :**
+- Claude (chat) : Cadrage du périmètre.
+- Claude Code : aide au développement (explications des notions etc.), avec un fichier `CLAUDE.md` qui lui donne le contexte du projet.
 
 ---
 
-## 📚 Learn More
+## Glossaire
 
-<table>
-  <tr>
-    <td>
-      <a href="https://docs.adonisjs.com"><strong>📖 AdonisJS Docs</strong></a>
-      <br>
-      <span>Complete guide to AdonisJS</span>
-    </td>
-    <td>
-      <a href="https://inertiajs.com"><strong>🔄 Inertia.js</strong></a>
-      <br>
-      <span>Learn about server-driven SPAs</span>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <a href="https://react.dev"><strong>⚛️ React Docs</strong></a>
-      <br>
-      <span>Modern React with hooks</span>
-    </td>
-    <td>
-      <a href="https://docs.adonisjs.com/guides/frontend/api-client"><strong>🔒 Tuyau</strong></a>
-      <br>
-      <span>Type-safe routing and API calls</span>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <a href="https://lucid.adonisjs.com"><strong>💾 Lucid ORM</strong></a>
-      <br>
-      <span>Database queries and relationships</span>
-    </td>
-    <td>
-      <a href="https://vinejs.dev"><strong>✅ VineJS</strong></a>
-      <br>
-      <span>Schema validation guide</span>
-    </td>
-  </tr>
-</table>
-
----
-
-## 🎨 Philosophy
-
-This starter kit embraces the **modern full-stack** approach to web development:
-
-- **Server-Side Routing** - No API complexity, just controllers returning Inertia responses
-- **Client-Side Experience** - React handles the UI with smooth SPA navigation
-- **Type Safety Everywhere** - TypeScript across frontend and backend with Tuyau integration
-- **Convention Over Configuration** - Sensible defaults, escape hatches when you need them
-- **Developer Experience** - Hot reload, great error messages, instant feedback
-- **Production Ready** - Security, validation, and testing built-in
-
-### Why Inertia.js?
-
-Traditional SPAs require building and maintaining a separate API. Inertia.js eliminates this complexity by letting your controllers return data directly to your React components. You get the smooth navigation of a SPA with the simplicity of traditional server-side routing.
-
----
-
-## 🤝 Contributing
-
-This starter kit is maintained by the AdonisJS team. Found a bug or have a suggestion? [Open an issue](https://github.com/adonisjs/starter-kits/issues) or submit a pull request!
-
----
-
-## 📄 License
-
-This starter kit is open-sourced software licensed under the [MIT license](LICENSE).
-
----
-
-<div align="center">
-  <sub>Built with ❤️ by the AdonisJS team</sub>
-</div>
+| Terme | Signification |
+|---|---|
+| **OACI** | Organisation de l'aviation civile internationale. Le code OACI d'un aéroport fait 4 lettres (ex. `LFPG` pour Paris-CDG). |
+| **Logbook** | Carnet de vol où le pilote consigne chacun de ses vols. |
+| **VATSIM** | Réseau en ligne gratuit où des pilotes et des contrôleurs humains partagent un même ciel virtuel. |
+| **Study level** | Niveau de simulation qui reproduit fidèlement tous les systèmes d'un avion réel. |
+| **Packs** | Groupes de climatisation d'un avion de ligne, alimentés par de l'air prélevé dans les moteurs. |
+| **ADIRS** | Centrales inertielles qui calculent la position, l'attitude et la vitesse de l'avion. |
+| **SimBrief** | Outil de préparation de plans de vol, très utilisé en simulation. |
