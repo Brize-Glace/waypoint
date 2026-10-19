@@ -7,6 +7,52 @@
 import { BaseModel, column } from '@adonisjs/lucid/orm'
 import { DateTime } from 'luxon'
 
+export class AirportSchema extends BaseModel {
+  static $columns = ['city', 'country', 'icao', 'id', 'latitude', 'longitude', 'name'] as const
+  $columns = AirportSchema.$columns
+  @column()
+  declare city: string | null
+  @column()
+  declare country: string
+  @column()
+  declare icao: string
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare latitude: number
+  @column()
+  declare longitude: number
+  @column()
+  declare name: string
+}
+
+export class FlightSchema extends BaseModel {
+  static $columns = ['aircraft', 'arrivalAirportId', 'createdAt', 'departureAirportId', 'durationMinutes', 'flownOn', 'id', 'notes', 'plannedArrivalAirportId', 'updatedAt', 'userId'] as const
+  $columns = FlightSchema.$columns
+  @column()
+  declare aircraft: string
+  @column()
+  declare arrivalAirportId: number
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column()
+  declare departureAirportId: number
+  @column()
+  declare durationMinutes: number
+  @column.date()
+  declare flownOn: DateTime
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare notes: string | null
+  @column()
+  declare plannedArrivalAirportId: number | null
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+  @column()
+  declare userId: number
+}
+
 export class UserSchema extends BaseModel {
   static $columns = ['createdAt', 'email', 'fullName', 'id', 'password', 'updatedAt'] as const
   $columns = UserSchema.$columns
