@@ -2,7 +2,7 @@ import { mkdir, writeFile } from 'node:fs/promises'
 import { parse } from 'csv-parse/sync'
 import { stringify } from 'csv-stringify/sync'
 
-type OurAiportsRow = {
+type OurAirportsRow = {
   type: string
   name: string
   latitude_deg: string
@@ -15,7 +15,7 @@ type OurAiportsRow = {
 const SOURCE_URL = 'https://davidmegginson.github.io/ourairports-data/airports.csv'
 const OUTPUT_DIR = 'database/data'
 const KEPT_TYPES = ['large_airport', 'medium_airport']
-const ICAO_REGEX = /[A-Z]{4}$/
+const ICAO_REGEX = /^[A-Z]{4}$/
 
 const response = await fetch(SOURCE_URL)
 if (!response.ok) {
@@ -24,7 +24,7 @@ if (!response.ok) {
 
 const csv = await response.text()
 
-const rows = parse(csv, { columns: true }) as OurAiportsRow[]
+const rows = parse(csv, { columns: true }) as OurAirportsRow[]
 
 const airports = rows
   .filter((row) => KEPT_TYPES.includes(row.type) && ICAO_REGEX.test(row.icao_code))
@@ -40,4 +40,4 @@ const airports = rows
 await mkdir(OUTPUT_DIR, { recursive: true })
 await writeFile(`${OUTPUT_DIR}/airports.csv`, stringify(airports, { header: true }))
 
-console.log(`${airports.length} aiports wrote in ${OUTPUT_DIR}/aiports.csv`)
+console.log(`${airports.length} airports written to ${OUTPUT_DIR}/airports.csv`)
