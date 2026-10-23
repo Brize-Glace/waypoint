@@ -25,7 +25,7 @@ router
 
 router
   .group(() => {
-    router.on('/dashboard').renderInertia('dashboard', {}).as('dashboard')
+    router.get('dashboard', [controllers.Dashboard, 'index']).as('dashboard')
     router.post('logout', [controllers.Session, 'destroy'])
     router.resource('flights', controllers.Flights)
   })
