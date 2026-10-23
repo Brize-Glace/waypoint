@@ -841,6 +841,87 @@ textarea.field__input {
 }
 
 /* ==========================================================================
+   Carte (Leaflet + tuiles OpenStreetMap)
+   Les tuiles OSM ne se re-stylent pas : on les passe en niveaux de gris pour
+   en faire un fond de carte discret, et seule la route reste en couleur.
+   ========================================================================== */
+.route-map {
+  height: 360px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r);
+  background: var(--paper);
+  font-family: var(--sans);
+  z-index: 0;
+}
+.route-map--compact {
+  height: 280px;
+}
+.route-map .leaflet-tile-pane {
+  filter: grayscale(1) contrast(0.85) brightness(1.05);
+}
+:root[data-theme='dark'] .route-map .leaflet-tile-pane {
+  filter: grayscale(1) invert(1) brightness(0.8) contrast(0.9);
+}
+/* le CSS l'emporte sur les attributs SVG posés par Leaflet : les couleurs suivent le thème */
+.route-map__path {
+  stroke: var(--route);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  fill: none;
+}
+.route-map__path--planned {
+  stroke: var(--muted);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 6;
+}
+.route-map__airport {
+  stroke: var(--card);
+  stroke-width: 2;
+  fill: var(--ink);
+  fill-opacity: 1;
+}
+.leaflet-container .leaflet-tooltip.route-map__tooltip {
+  padding: 2px 6px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-sm);
+  background: var(--card);
+  color: var(--ink);
+  box-shadow: none;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+.leaflet-tooltip.route-map__tooltip::before {
+  display: none;
+}
+/* .leaflet-container en plus : leaflet.css est chargé après nous et gagnerait à spécificité égale */
+.route-map.leaflet-container .leaflet-bar {
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-sm);
+  box-shadow: none;
+}
+.route-map.leaflet-container .leaflet-bar a {
+  background: var(--card);
+  color: var(--ink);
+  border-bottom-color: var(--line-2);
+}
+.route-map.leaflet-container .leaflet-control-attribution {
+  background: color-mix(in oklab, var(--card) 85%, transparent);
+  color: var(--muted);
+  font-size: 11px;
+}
+.route-map.leaflet-container .leaflet-control-attribution a {
+  color: var(--ink-2);
+}
+.logbook__map {
+  margin-bottom: 36px;
+}
+.flight-map {
+  margin-bottom: 28px;
+}
+
+/* ==========================================================================
    Formulaire de vol
    ========================================================================== */
 .flight-form {
@@ -1108,6 +1189,9 @@ textarea.field__input {
   }
   .flight-route__code {
     font-size: 32px;
+  }
+  .route-map {
+    height: 260px;
   }
   .flight-route {
     column-gap: 14px;

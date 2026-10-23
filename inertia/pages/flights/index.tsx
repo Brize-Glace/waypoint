@@ -1,5 +1,6 @@
 import Page from '~/components/page'
 import Route from '~/components/route'
+import RouteMap, { type Leg } from '~/components/route_map'
 import AppLayout from '~/layouts/app'
 import { type Data } from '@generated/data'
 import { type InertiaProps } from '~/types'
@@ -16,6 +17,18 @@ function groupByMonth(flights: Data.Flight[]) {
     months.set(month, [...(months.get(month) ?? []), flight])
   }
   return [...months]
+}
+
+// Une seule ligne par paire d'aéroports, même si la route a été volée plusieurs fois
+function uniqueLegs(flights: Data.Flight[]) {
+  const legs = new Map<string, Leg>()
+  for (const flight of flights) {
+    legs.set(`${flight.departure.icao}-${flight.arrival.icao}`, {
+      from: flight.departure,
+      to: flight.arrival,
+    })
+  }
+  return [...legs.values()]
 }
 
 export default function FlightsIndex({ flights }: Props) {
@@ -40,6 +53,8 @@ export default function FlightsIndex({ flights }: Props) {
       title="Logbook"
       description={`${flights.length} ${flights.length === 1 ? 'flight' : 'flights'}`}
     >
+      <RouteMap legs={uniqueLegs(flights)} className="logbook__map" />
+
       <div className="logbook__columns" aria-hidden="true">
         <span>Date</span>
         <span>Route</span>

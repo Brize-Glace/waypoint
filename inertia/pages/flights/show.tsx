@@ -1,6 +1,7 @@
 import Page from '~/components/page'
 import AppLayout from '~/layouts/app'
 import { RouteLine } from '~/components/route'
+import RouteMap, { type Leg } from '~/components/route_map'
 import { type Data } from '@generated/data'
 import { type InertiaProps } from '~/types'
 import { Form, Link } from '@adonisjs/inertia/react'
@@ -19,6 +20,11 @@ function Place({ airport }: { airport: Data.Airport }) {
 }
 
 export default function ShowFlight({ flight }: Props) {
+  const legs: Leg[] = [{ from: flight.departure, to: flight.arrival }]
+  if (flight.plannedArrival) {
+    legs.unshift({ from: flight.departure, to: flight.plannedArrival, planned: true })
+  }
+
   return (
     <Page
       title={`${flight.departure.icao} → ${flight.arrival.icao}`}
@@ -56,6 +62,8 @@ export default function ShowFlight({ flight }: Props) {
           Edit flight
         </Link>
       </div>
+
+      <RouteMap legs={legs} labels className="flight-map" />
 
       <dl className="facts">
         <div>
