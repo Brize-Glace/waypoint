@@ -98,6 +98,19 @@ export interface Registry {
       rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/session_controller').default['destroy']>>>
     }
   }
+  'flights.index': {
+    methods: ["GET","HEAD"]
+    pattern: '/flights'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/flights_controller').default['index']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/flights_controller').default['index']>>>
+      rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/flights_controller').default['index']>>>
+    }
+  }
   'flights.create': {
     methods: ["GET","HEAD"]
     pattern: '/flights/create'

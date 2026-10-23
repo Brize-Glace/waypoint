@@ -872,6 +872,24 @@ input {
 :root[data-theme='dark'] [data-sonner-toaster] [data-sonner-toast][data-type='error'] [data-icon] {
   color: #e0685c;
 }
+/* --- logbook table --- */
+.logbook {
+  width: 100%;
+  border-collapse: collapse;
+}
+.logbook th,
+.logbook td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+}
+.logbook th {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
 
 /* ==========================================================================
    Responsive

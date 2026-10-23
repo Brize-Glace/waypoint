@@ -1,6 +1,6 @@
 import Logo from '~/components/logo'
 import { type ReactNode } from 'react'
-import { House, LogOut, Plus } from 'lucide-react'
+import { House, LogOut, BookOpen } from 'lucide-react'
 import { Form } from '@adonisjs/inertia/react'
 import FlashToasts from '~/components/flash_toasts'
 import ThemeToggle from '~/components/theme_toggle'
@@ -12,7 +12,7 @@ import NavLink, { type NavItem } from '~/components/nav_link'
  */
 const nav: NavItem[] = [
   { label: 'Dashboard', route: 'dashboard', icon: House },
-  { label: 'New flight', route: 'flights.create', icon: Plus },
+  { label: 'Logbook', route: 'flights.index', icon: BookOpen },
 ]
 
 export default function AppLayout({ children }: { children: ReactNode }) {

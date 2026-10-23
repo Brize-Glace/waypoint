@@ -14,6 +14,7 @@ export interface ApiDefinition {
   }
   dashboard: typeof routes['dashboard']
   flights: {
+    index: typeof routes['flights.index']
     create: typeof routes['flights.create']
     store: typeof routes['flights.store']
   }

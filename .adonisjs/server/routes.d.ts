@@ -11,6 +11,7 @@ export type ScannedRoutes = {
     'session.store': { paramsTuple?: []; params?: {} }
     'dashboard': { paramsTuple?: []; params?: {} }
     'session.destroy': { paramsTuple?: []; params?: {} }
+    'flights.index': { paramsTuple?: []; params?: {} }
     'flights.create': { paramsTuple?: []; params?: {} }
     'flights.store': { paramsTuple?: []; params?: {} }
   }
@@ -19,6 +20,7 @@ export type ScannedRoutes = {
     'new_account.create': { paramsTuple?: []; params?: {} }
     'session.create': { paramsTuple?: []; params?: {} }
     'dashboard': { paramsTuple?: []; params?: {} }
+    'flights.index': { paramsTuple?: []; params?: {} }
     'flights.create': { paramsTuple?: []; params?: {} }
   }
   HEAD: {
@@ -26,6 +28,7 @@ export type ScannedRoutes = {
     'new_account.create': { paramsTuple?: []; params?: {} }
     'session.create': { paramsTuple?: []; params?: {} }
     'dashboard': { paramsTuple?: []; params?: {} }
+    'flights.index': { paramsTuple?: []; params?: {} }
     'flights.create': { paramsTuple?: []; params?: {} }
   }
   POST: {

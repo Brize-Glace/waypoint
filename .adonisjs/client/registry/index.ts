@@ -48,6 +48,12 @@ const routes = {
     tokens: [[0,"logout"]],
     types: placeholder as Registry['session.destroy']['types'],
   },
+  'flights.index': {
+    methods: ["GET","HEAD"],
+    pattern: '/flights',
+    tokens: [[0,"flights"]],
+    types: placeholder as Registry['flights.index']['types'],
+  },
   'flights.create': {
     methods: ["GET","HEAD"],
     pattern: '/flights/create',

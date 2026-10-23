@@ -1,8 +1,23 @@
 import Airport from '#models/airport'
 import { flightValidator } from '#validators/flight'
 import type { HttpContext } from '@adonisjs/core/http'
+import FlightTransformer from '#transformers/flight_transformer'
 
 export default class FlightsController {
+  async index({ inertia, auth }: HttpContext) {
+    const flights = await auth
+      .getUserOrFail()
+      .related('flights')
+      .query()
+      .preload('departure')
+      .preload('arrival')
+      .preload('plannedArrival')
+      .orderBy('flown_on', 'desc')
+      .orderBy('id', 'desc')
+
+    return inertia.render('flights/index', { flights: FlightTransformer.transform(flights) })
+  }
+
   async create({ inertia }: HttpContext) {
     return inertia.render('flights/create', {})
   }
@@ -29,6 +44,6 @@ export default class FlightsController {
       })
 
     session.flash('success', 'Flight saved')
-    return response.redirect().toRoute('dashboard')
+    return response.redirect().toRoute('flights.index')
   }
 }

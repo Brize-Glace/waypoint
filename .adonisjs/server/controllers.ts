@@ -4,7 +4,7 @@
  */
 
 export const controllers = {
+  Flights: () => import('#controllers/flights_controller'),
   NewAccount: () => import('#controllers/new_account_controller'),
   Session: () => import('#controllers/session_controller'),
-  Flights: () => import('#controllers/flights_controller'),
 }
