@@ -1,23 +1,22 @@
+import { Link } from '@adonisjs/inertia/react'
 import MarketingLayout from '~/layouts/marketing'
 
 export default function NotFound() {
   return (
-    <div className="home">
-      <article className="prose-card">
-        <div className="pc-top">
-          <span className="pc-status mono tag" style={{ color: 'var(--subtle)' }}>
-            <span className="dot" /> 404
-          </span>
-        </div>
-        <div className="pc-lead">
-          <span>Not found.</span>
-          <em>That route hasn&apos;t been built yet.</em>
-        </div>
-        <p className="pc-para">
-          The page you tried to reach doesn&apos;t exist. Check the URL or head back home.
+    <main className="landing landing--message">
+      <div>
+        <p className="landing__code">404</p>
+        <h1 className="landing__title">This page isn&apos;t on the chart.</h1>
+        <p className="landing__lead">
+          The link may be wrong, or the flight it pointed to was deleted.
         </p>
-      </article>
-    </div>
+        <div className="landing__actions">
+          <Link route="flights.index" className="btn btn--primary">
+            Back to the logbook
+          </Link>
+        </div>
+      </div>
+    </main>
   )
 }
 

@@ -4,15 +4,14 @@ import { Form, Link } from '@adonisjs/inertia/react'
 export default function Signup() {
   return (
     <>
-      <h1 className="auth__title">Create your account</h1>
-      <p className="auth__sub">Start building with the starter kit.</p>
+      <h1 className="auth__title">Create your logbook</h1>
 
       <Form route="new_account.store">
         {({ errors, processing }) => (
           <div className="auth__form">
             <div className="field">
               <label className="field__label" htmlFor="fullName">
-                Full name
+                Name <span className="muted">(optional)</span>
               </label>
               <input
                 id="fullName"
@@ -20,7 +19,7 @@ export default function Signup() {
                 type="text"
                 className="field__input"
                 autoComplete="name"
-                placeholder="Ada Lovelace"
+                placeholder="Amelia Earhart"
                 aria-invalid={errors.fullName ? 'true' : 'false'}
               />
               {errors.fullName && <span className="field__error">{errors.fullName}</span>}
@@ -52,9 +51,12 @@ export default function Signup() {
                 type="password"
                 className="field__input"
                 autoComplete="new-password"
-                placeholder="••••••••"
+                aria-describedby="password-hint"
                 aria-invalid={errors.password ? 'true' : 'false'}
               />
+              <span id="password-hint" className="field__hint">
+                8 to 32 characters.
+              </span>
               {errors.password && <span className="field__error">{errors.password}</span>}
             </div>
 
@@ -68,7 +70,6 @@ export default function Signup() {
                 type="password"
                 className="field__input"
                 autoComplete="new-password"
-                placeholder="••••••••"
                 aria-invalid={errors.passwordConfirmation ? 'true' : 'false'}
               />
               {errors.passwordConfirmation && (
@@ -76,20 +77,15 @@ export default function Signup() {
               )}
             </div>
 
-            <button
-              type="submit"
-              className="btn btn--primary btn--block"
-              disabled={processing}
-              style={{ marginTop: 4 }}
-            >
-              {processing ? 'One moment…' : 'Create account'}
+            <button type="submit" className="btn btn--primary btn--block" disabled={processing}>
+              {processing ? 'Creating…' : 'Create logbook'}
             </button>
           </div>
         )}
       </Form>
 
       <p className="auth__foot">
-        Already have an account?{' '}
+        Already have a logbook?{' '}
         <Link route="session.create" className="il">
           Sign in
         </Link>

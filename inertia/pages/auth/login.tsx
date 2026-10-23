@@ -4,8 +4,7 @@ import { Form, Link } from '@adonisjs/inertia/react'
 export default function Login() {
   return (
     <>
-      <h1 className="auth__title">Welcome back</h1>
-      <p className="auth__sub">Sign in to continue building.</p>
+      <h1 className="auth__title">Sign in to your logbook</h1>
 
       <Form route="session.store">
         {({ errors, processing }) => (
@@ -36,28 +35,22 @@ export default function Login() {
                 type="password"
                 className="field__input"
                 autoComplete="current-password"
-                placeholder="••••••••"
                 aria-invalid={errors.password ? 'true' : 'false'}
               />
               {errors.password && <span className="field__error">{errors.password}</span>}
             </div>
 
-            <button
-              type="submit"
-              className="btn btn--primary btn--block"
-              disabled={processing}
-              style={{ marginTop: 4 }}
-            >
-              {processing ? 'One moment…' : 'Sign in'}
+            <button type="submit" className="btn btn--primary btn--block" disabled={processing}>
+              {processing ? 'Signing in…' : 'Sign in'}
             </button>
           </div>
         )}
       </Form>
 
       <p className="auth__foot">
-        New here?{' '}
+        No logbook yet?{' '}
         <Link route="new_account.create" className="il">
-          Create an account
+          Create one
         </Link>
       </p>
     </>

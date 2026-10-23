@@ -1,74 +1,100 @@
 import Page from '~/components/page'
 import AppLayout from '~/layouts/app'
+import { RouteLine } from '~/components/route'
 import { type Data } from '@generated/data'
 import { type InertiaProps } from '~/types'
 import { Form, Link } from '@adonisjs/inertia/react'
-import { formatDuration } from '~/lib/format'
+import { formatDate, formatDuration, formatNumber } from '~/lib/format'
 
 type Props = InertiaProps<{ flight: Data.Flight }>
+
+function Place({ airport }: { airport: Data.Airport }) {
+  return (
+    <>
+      <strong>{airport.name}</strong>
+      {airport.city && `${airport.city}, `}
+      {airport.country}
+    </>
+  )
+}
 
 export default function ShowFlight({ flight }: Props) {
   return (
     <Page
       title={`${flight.departure.icao} → ${flight.arrival.icao}`}
-      actions={
-        <>
-          <Link
-            route="flights.edit"
-            routeParams={{ id: flight.id }}
-            className="btn btn--secondary btn--sm"
-          >
-            Edit
-          </Link>
-          <Form
-            route="flights.destroy"
-            routeParams={{ id: flight.id }}
-            onBefore={() => confirm('Delete this flight?')}
-          >
-            <button type="submit" className="btn btn--secondary btn--sm">
-              Delete
-            </button>
-          </Form>
-        </>
+      hideTitle
+      back={
+        <Link route="flights.index" className="backlink">
+          ← Logbook
+        </Link>
       }
     >
-      <dl>
-        <dt>Date</dt>
-        <dd className="mono">{flight.flownOn}</dd>
+      <div className="flight-head">
+        <h1 className="flight-route">
+          <span className="flight-route__code">{flight.departure.icao}</span>
+          <RouteLine />
+          <span className="sr-only">to</span>
+          <span className="flight-route__code">{flight.arrival.icao}</span>
+          <span className="flight-route__place">
+            <Place airport={flight.departure} />
+          </span>
+          <span className="flight-route__place">
+            <Place airport={flight.arrival} />
+            {flight.plannedArrival && (
+              <span className="flight-route__diversion">
+                Diverted, planned {flight.plannedArrival.icao} ({flight.plannedArrival.name})
+              </span>
+            )}
+          </span>
+        </h1>
 
-        <dt>From</dt>
-        <dd>
-          <span className="mono">{flight.departure.icao}</span> {flight.departure.name}
-        </dd>
+        <Link
+          route="flights.edit"
+          routeParams={{ id: flight.id }}
+          className="btn btn--secondary btn--sm"
+        >
+          Edit flight
+        </Link>
+      </div>
 
-        <dt>To</dt>
-        <dd>
-          <span className="mono">{flight.arrival.icao}</span> {flight.arrival.name}
-        </dd>
-
-        {flight.plannedArrival && (
-          <>
-            <dt>Planned destination (diverted)</dt>
-            <dd>
-              <span className="mono">{flight.plannedArrival.icao}</span>{' '}
-              {flight.plannedArrival.name}
-            </dd>
-          </>
-        )}
-
-        <dt>Aircraft</dt>
-        <dd>{flight.aircraft}</dd>
-
-        <dt>Duration</dt>
-        <dd className="mono">{formatDuration(flight.durationMinutes)}</dd>
-
-        {flight.notes && (
-          <>
-            <dt>Notes</dt>
-            <dd>{flight.notes}</dd>
-          </>
-        )}
+      <dl className="facts">
+        <div>
+          <dt>Date</dt>
+          <dd>{formatDate(flight.flownOn)}</dd>
+        </div>
+        <div>
+          <dt>Aircraft</dt>
+          <dd>{flight.aircraft}</dd>
+        </div>
+        <div>
+          <dt>Block time</dt>
+          <dd>{formatDuration(flight.durationMinutes)}</dd>
+        </div>
+        <div>
+          <dt>Distance</dt>
+          <dd>{formatNumber(flight.distanceNm)} NM</dd>
+        </div>
       </dl>
+
+      {flight.notes && (
+        <section className="notes">
+          <h2 className="heading">Notes</h2>
+          <p>{flight.notes}</p>
+        </section>
+      )}
+
+      {/* Action rare et destructive : en bas de page, sans poids visuel, avec confirmation */}
+      <div className="flight-foot">
+        <Form
+          route="flights.destroy"
+          routeParams={{ id: flight.id }}
+          onBefore={() => confirm('Delete this flight from your logbook?')}
+        >
+          <button type="submit" className="btn btn--danger">
+            Delete flight
+          </button>
+        </Form>
+      </div>
     </Page>
   )
 }

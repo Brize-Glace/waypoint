@@ -9,24 +9,19 @@ export default function MarketingLayout({ children }: { children: ReactNode }) {
   const { props } = usePage()
   return (
     <>
-      <header className="header header--floating">
-        <div className="header__inner">
-          <Logo size={28} />
-          <div className="header__right">
+      <header className="site-header">
+        <div className="site-header__inner">
+          <Logo />
+          <div className="site-header__actions">
             <ThemeToggle />
             {props.user ? (
-              <Link route="dashboard" className="btn btn--primary btn--sm">
-                Dashboard
+              <Link route="flights.index" className="btn btn--secondary btn--sm">
+                Open logbook
               </Link>
             ) : (
-              <>
-                <Link route="session.create" className="btn btn--ghost btn--sm">
-                  Sign in
-                </Link>
-                <Link route="new_account.create" className="btn btn--primary btn--sm">
-                  Get started
-                </Link>
-              </>
+              <Link route="session.create" className="btn btn--quiet btn--sm">
+                Sign in
+              </Link>
             )}
           </div>
         </div>
