@@ -17,5 +17,9 @@ export interface ApiDefinition {
     index: typeof routes['flights.index']
     create: typeof routes['flights.create']
     store: typeof routes['flights.store']
+    show: typeof routes['flights.show']
+    edit: typeof routes['flights.edit']
+    update: typeof routes['flights.update']
+    destroy: typeof routes['flights.destroy']
   }
 }

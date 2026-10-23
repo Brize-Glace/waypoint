@@ -137,4 +137,56 @@ export interface Registry {
       rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/flights_controller').default['store']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
+  'flights.show': {
+    methods: ["GET","HEAD"]
+    pattern: '/flights/:id'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/flights_controller').default['show']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/flights_controller').default['show']>>>
+      rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/flights_controller').default['show']>>>
+    }
+  }
+  'flights.edit': {
+    methods: ["GET","HEAD"]
+    pattern: '/flights/:id/edit'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/flights_controller').default['edit']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/flights_controller').default['edit']>>>
+      rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/flights_controller').default['edit']>>>
+    }
+  }
+  'flights.update': {
+    methods: ["PUT","PATCH"]
+    pattern: '/flights/:id'
+    types: {
+      body: ExtractBody<InferInput<(typeof import('#validators/flight').flightValidator)>>
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: ExtractQuery<InferInput<(typeof import('#validators/flight').flightValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/flights_controller').default['update']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/flights_controller').default['update']>>> | { status: 422; response: { errors: SimpleError[] } }
+      rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/flights_controller').default['update']>>> | { status: 422; response: { errors: SimpleError[] } }
+    }
+  }
+  'flights.destroy': {
+    methods: ["DELETE"]
+    pattern: '/flights/:id'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/flights_controller').default['destroy']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/flights_controller').default['destroy']>>>
+      rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/flights_controller').default['destroy']>>>
+    }
+  }
 }

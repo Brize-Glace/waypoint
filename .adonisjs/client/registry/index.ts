@@ -66,6 +66,30 @@ const routes = {
     tokens: [[0,"flights"]],
     types: placeholder as Registry['flights.store']['types'],
   },
+  'flights.show': {
+    methods: ["GET","HEAD"],
+    pattern: '/flights/:id',
+    tokens: [[0,"flights"],[1,"id"]],
+    types: placeholder as Registry['flights.show']['types'],
+  },
+  'flights.edit': {
+    methods: ["GET","HEAD"],
+    pattern: '/flights/:id/edit',
+    tokens: [[0,"flights"],[1,"id"],[0,"edit"]],
+    types: placeholder as Registry['flights.edit']['types'],
+  },
+  'flights.update': {
+    methods: ["PUT","PATCH"],
+    pattern: '/flights/:id',
+    tokens: [[0,"flights"],[1,"id"]],
+    types: placeholder as Registry['flights.update']['types'],
+  },
+  'flights.destroy': {
+    methods: ["DELETE"],
+    pattern: '/flights/:id',
+    tokens: [[0,"flights"],[1,"id"]],
+    types: placeholder as Registry['flights.destroy']['types'],
+  },
 } as const satisfies Record<string, AdonisEndpoint>
 
 export { routes }

@@ -14,6 +14,10 @@ export type ScannedRoutes = {
     'flights.index': { paramsTuple?: []; params?: {} }
     'flights.create': { paramsTuple?: []; params?: {} }
     'flights.store': { paramsTuple?: []; params?: {} }
+    'flights.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'flights.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'flights.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'flights.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
   GET: {
     'home': { paramsTuple?: []; params?: {} }
@@ -22,6 +26,8 @@ export type ScannedRoutes = {
     'dashboard': { paramsTuple?: []; params?: {} }
     'flights.index': { paramsTuple?: []; params?: {} }
     'flights.create': { paramsTuple?: []; params?: {} }
+    'flights.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'flights.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
   HEAD: {
     'home': { paramsTuple?: []; params?: {} }
@@ -30,12 +36,23 @@ export type ScannedRoutes = {
     'dashboard': { paramsTuple?: []; params?: {} }
     'flights.index': { paramsTuple?: []; params?: {} }
     'flights.create': { paramsTuple?: []; params?: {} }
+    'flights.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'flights.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
   POST: {
     'new_account.store': { paramsTuple?: []; params?: {} }
     'session.store': { paramsTuple?: []; params?: {} }
     'session.destroy': { paramsTuple?: []; params?: {} }
     'flights.store': { paramsTuple?: []; params?: {} }
+  }
+  PUT: {
+    'flights.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+  }
+  PATCH: {
+    'flights.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+  }
+  DELETE: {
+    'flights.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
 }
 declare module '@adonisjs/core/types/http' {

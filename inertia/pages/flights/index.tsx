@@ -3,14 +3,9 @@ import AppLayout from '~/layouts/app'
 import { type Data } from '@generated/data'
 import { type InertiaProps } from '~/types'
 import { Link } from '@adonisjs/inertia/react'
+import { formatDuration } from '~/lib/format'
 
 type Props = InertiaProps<{ flights: Data.Flight[] }>
-
-function formatDuration(minutes: number) {
-  const hours = Math.floor(minutes / 60)
-  const rest = minutes % 60
-  return `${hours}h${String(rest).padStart(2, '0')}`
-}
 
 export default function FlightsIndex({ flights }: Props) {
   return (
@@ -38,7 +33,9 @@ export default function FlightsIndex({ flights }: Props) {
           <tbody>
             {flights.map((flight) => (
               <tr key={flight.id}>
-                <td className="mono">{flight.flownOn}</td>
+                <Link route="flights.show" routeParams={{ id: flight.id }}>
+                  <td className="mono">{flight.flownOn}</td>
+                </Link>
                 <td className="mono">{flight.departure.icao}</td>
                 <td className="mono">
                   {flight.arrival.icao}
